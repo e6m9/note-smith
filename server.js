@@ -1,104 +1,119 @@
-// learn how to use Heroku
-
-// GET on notes button to open notes page
-// GET for save note and clear form buttons to appear after text has been entered into the note field
-// POST for save note button to save to local storage and print on page with previous notes && for the save note button and clear form button to disappear
-// GET on note fields to, on click, move back to the input area for editing && a new note button appears
-// GET for new note button to clear edit fields and button disappears
-// GET on clear form button that clears edit fields, does the same as new note button
-// DELETE for delete note button
-
-// imports packages
+// imports express as a framework for unifying backend with frontend functionality
 const express = require('express');
 const app = express();
+
+// imports uuid in order to generate unique id's for new notes
+const { v4: uuidv4 } = require('uuid')
+
+// imports fs in order to read and write files and their information
 const fs = require('fs');
+
+// imports path to allow connecting between backend and frontend
 const path = require('path');
+
+// sets the port to 3001
 const PORT = 3001;
 
-// declare html elements as variables 
-var titleField = document.getElementByClassName('note-title');
-var noteField = document.getElementByClassName('note-textarea');
-
-// middleware to handle JSON parsing and url data
+// middleware to handle JSON parsing, url data, and static pages
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-//functions
-
-// clears edit fields
-const clearState = (req, res) => {
-    titleField: '';
-    noteField: '';
-}
-
-// joins the notes button to the notes html page
-const notesButton = (req, res) => {
-    res.sendFile(path.join(__dirname, 'notes.html'))
-    // if notes, then post?
-}
-
-// joins the 404 state to the homepage
-const oopsState = (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'))
-}
-
-// makes buttons appear
-const buttonShow = (req, res) => {
-
-}
-
-// posts notes to left hand column
-const saveNote = (req, res) => {
-
-}
-
-// moves saved note to edit column
-const editNote = (req, res) => {
-    
-}
-
-// clears edit fields
-const noteFieldReset = (req, res) => {
-
-}
-
-// clears edit fields
-const newNote = (req, res) => {
-
-}
-
-// deletes note
-const deleteButton = (req, res) => {
-
-}
+app.use(express.static('public'));
 
 //routes
 
-// clear fields syntax
-app.post('/clear-form', '/save-note',
-clearState,
-);
+// routes /notes to notes.html
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/notes.html'))
+});
+
+// routes api/notes to db.json in order to read the data
+app.get('/api/notes', (req, res) => {
+    fs.readFile(path.join('./db/db.json'), 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading db.json:', err);
+            return res.status(500).send('Internal Server Error');
+        } else {
+            res.json(JSON.parse(data));
+        }
+    })
+});
+
+// allows creation of new notes with unique ids
+app.post('/api/notes', (req, res) => {
+    const { title, text } = req.body;
+
+    if (title && text) {
+
+        fs.readFile('./db/db.json', 'utf8', (readErr, data) => {
+            if (readErr) {
+                console.error('Error reading db.json:', readErr);
+                res.status(500).json('Internal Server Error');
+            }
+
+            const notes = JSON.parse(data);
+
+            const newNote = {
+                title,
+                text,
+                id: uuidv4(),
+            };
+
+            notes.push(newNote);
+
+            fs.writeFile('./db/db.json', JSON.stringify(notes), (err) =>
+                err
+                    ? console.error(err)
+                    : console.log(
+                        'New Note added'
+                    )
+            );
+
+            const response = {
+                status: 'note created',
+                body: newNote,
+            };
+
+            console.log(response);
+            res.status(201).json(response);
+        });
+
+    } else {
+        res.status(400).json('Error: Title and Text required');
+    }
+});
+
+
+app.delete('/api/notes/:id', (req, res) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading db.json:', err);
+            res.status(500).send('Internal Server Error');
+        }
+
+        const notes = JSON.parse(data);
+
+        const updatedNotes = notes.filter(note => note && note.id !== req.params.id);
+
+        if (updatedNotes.length < notes.length) {
+            fs.writeFile('./db/db.json', JSON.stringify(updatedNotes), (writeErr) => {
+                if (writeErr) {
+                    console.error('Error writing to db.json:', writeErr);
+                    res.status(500).send('Internal Server Error');
+                }
+                res.status(200).json({ status: 'note deleted' });
+            });
+        } else {
+            res.status(404).json({ status: 'note not found' });
+        }
+    });
+});
 
 // error route
-app.get('*',
-oopsState
-);
-
-app.get('/notes',
-notesButton
-);
-
-app.get('api/notes',
-);
-
-app.post('api/notes',
-);
-
-app.delete('api/notes/:id',
-);
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'))
+});
 
 // allowsn the app to access the port
 app.listen(PORT, () =>
-  console.log(`Express server listening on port ${PORT}!`)
+    console.log(`Express server listening on port ${PORT}!`)
 );
