@@ -100,7 +100,13 @@ app.delete('/api/notes/:id', (req, res) => {
                     console.error('Error writing to db.json:', writeErr);
                     res.status(500).send('Internal Server Error');
                 }
-                res.status(200).json({ status: 'note deleted' });
+
+                const response = {
+                    status: 'note deleted',
+                };
+
+                console.log(response);
+                res.status(200).json(response);
             });
         } else {
             res.status(404).json({ status: 'note not found' });
