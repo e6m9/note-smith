@@ -53,6 +53,7 @@ app.post('/api/notes', (req, res) => {
             const notes = JSON.parse(data);
 
             // defines what a new note is using uuidv4() to generate a unique id for each new note
+
             const newNote = {
                 title,
                 text,
@@ -82,6 +83,47 @@ app.post('/api/notes', (req, res) => {
         res.status(400).json('Error: Title and Text required');
     }
 });
+
+app.put('/api/notes/:id', (req, res) => {
+    fs.readFile('./db/db.json', 'utf8', (err, data) => {
+        if (err) {
+            console.error('Error reading db.json:', err);
+            res.status(500).send('Internal Server Error');
+        }
+        const { title, text } = req.body;
+
+        const notes = JSON.parse(data);
+
+        // uses a filter to check for the id selected
+        const updatedNotes = notes.map(note => {
+            if (note.id === req.params.id) {
+                return {
+                    title,
+                    text,
+                    id: req.params.id,
+                }
+            } else {
+                return note;
+            }
+        }
+        );
+
+        fs.writeFile('./db/db.json', JSON.stringify(updatedNotes), (writeErr) => {
+            if (writeErr) {
+                console.error('Error writing to db.json:', writeErr);
+                res.status(500).send('Internal Server Error');
+            }
+
+            const response = {
+                status: 'note updated',
+            };
+
+            console.log(response);
+            res.status(200).json(response);
+        });
+    })
+});
+
 
 // allows deletion of old notes using the unique id
 app.delete('/api/notes/:id', (req, res) => {

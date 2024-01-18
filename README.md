@@ -19,7 +19,6 @@ an application that allows the user to read, write, save, and delete notes
 
 ## Usage
 
-
 [screenshots]()
 
 ## License
