@@ -11,6 +11,9 @@ const fs = require('fs');
 // imports path to allow connecting between backend and frontend
 const path = require('path');
 
+// sets the port to 3001
+const PORT = 12942;
+
 // middleware to handle JSON parsing, url data, and static pages
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
