@@ -20,7 +20,7 @@ an application that allows the user to read, write, save, and delete notes
 ## Installation
 
 ## Usage
-write, save, and delete notes
+Click on the "Get Started" button to open up the notes interface. Clicking in the title or note text areas will bring up the "save note", and "new note" buttons. After a note has been created, it can be deleted by clicking on the trash can icon next to it on the left side of the application. Clicking on a note title will open it on the right side of the application. Clicking on the "New Note" button allows for creation of a new note. 
 
 [link-to-deployed-application](https://warm-depths-06907-3d967eb40a9a.herokuapp.com/)
 
@@ -34,7 +34,7 @@ write, save, and delete notes
 See the License file for license information.
 
 ## Acknowledgements
-This application utilizes the following packages
+This application utilizes the following packages along with chatgpt as a debugging tool:
 
 - [https://expressjs.com/](Express.js)
 - [https://www.npmjs.com/package/uuid](uuid)
