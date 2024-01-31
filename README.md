@@ -33,13 +33,13 @@ This application utilizes the following packages
 ## Further Development
 If I choose to return to this app or if someone wishes to add to it, I'd like to see the following added:
 
-- [x] increase the size of the note-textarea field in order to easily view larger notes
-- [ ] Add an edit feature
+- [x] increase the size of the note-text area field in order to easily view larger notes
+- [] Add an edit feature
 
 ## Author
 
 - Ashley Maximillian
-- https://github.com/e6m9
+- [e6m9 on github](https://github.com/e6m9)
 
 ## Contact
 For any inquiries, please send yr emails to:
@@ -47,4 +47,4 @@ For any inquiries, please send yr emails to:
 - alostsound@gmail.com
 
 ## Final Thoughts
-I'm a very busy person and I love making to-do lists and jotting down reminders. This was a fun project and I'm considering building something like this entirely from scratch some day.
+I'm a very busy person and I love making to-do lists and jotting down reminders. This was a fun project and I'm excited to use it in a practical setting.
