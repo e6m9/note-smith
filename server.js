@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 // sets the port to 3001
-const PORT = 12942;
+const PORT = process.env.PORT || 3001;
 
 // middleware to handle JSON parsing, url data, and static pages
 app.use(express.json());
