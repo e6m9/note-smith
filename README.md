@@ -18,8 +18,13 @@ an application that allows the user to read, write, save, and delete notes
 ## Installation
 
 ## Usage
+write, save, and delete notes
 
-[screenshots]()
+![notesmith splash page with a get started button at the center of the page](./images/splashpage.png)
+
+![page with 4 notes on the left side. An empty title and text field on the right](./images/allnotes.png)
+
+![page with 3 notes on the left side](./images/deleted.png)
 
 ## License
 See the License file for license information.
@@ -34,7 +39,7 @@ This application utilizes the following packages
 If I choose to return to this app or if someone wishes to add to it, I'd like to see the following added:
 
 - [x] increase the size of the note-text area field in order to easily view larger notes
-- [] Add an edit feature
+- [] Add an edit feature (paths are ready to be made)
 
 ## Author
 

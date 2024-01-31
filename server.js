@@ -84,7 +84,7 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
-// 
+// allows for editing individual notes in the api directly
 app.put('/api/notes/:id', (req, res) => {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) {

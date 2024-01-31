@@ -45,6 +45,7 @@ const saveNote = (note) =>
     body: JSON.stringify(note)
   });
 
+// setup for editing notes
 const putNote = (id) =>
   fetch(`/api/notes/${id}`, {
     method: 'PUT',
